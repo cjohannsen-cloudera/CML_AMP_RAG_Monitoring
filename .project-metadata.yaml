@@ -20,6 +20,15 @@ environment_variables:
   AWS_SECRET_ACCESS_KEY:
     default: ""
     description: "AWS Secret Access Key. Needed for accessing Bedrock Models."
+  CAII_DOMAIN:
+    default: ""
+    description: "Cloudera AI Inference hostname."
+  CAII_INFERENCE_ENDPOINT_NAME:
+    default: ""
+    description: "Cloudera AI Inference inference endpoint name."
+  CAII_EMBEDDING_ENDPOINT_NAME:
+    default: ""
+    description: "Cloudera AI Inference embedding endpoint name."
 
 tasks:
   - type: run_session
