@@ -64,7 +64,7 @@ from llama_index.core.storage import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from pydantic import BaseModel
 
-from ...services.ragllm import get_embedding_model, get_inference_model
+from ...services.ragllm import get_embedding_model_and_dims, get_inference_model
 from .judge import MaliciousnessEvaluator, ToxicityEvaluator, ComprehensivenessEvaluator
 from pprint import pprint
 import asyncio
@@ -116,7 +116,7 @@ def upload(
         configuration.chunk_overlap * 0.01 * configuration.chunk_size
     )
 
-    embed_model = get_embedding_model()
+    embed_model, _ = get_embedding_model_and_dims()
     logger.info("indexing document")
     VectorStoreIndex.from_documents(
         documents,
@@ -206,7 +206,7 @@ def query(
         # TODO: catch a more specific exception for index/namespace not found
         logger.error("Qdrant index or namespace not found")
         raise
-    embed_model, _ = get_embedding_model()
+    embed_model, _ = get_embedding_model_and_dims()
     index = VectorStoreIndex.from_vector_store(
         vector_store=vector_store,
         embed_model=embed_model,

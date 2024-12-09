@@ -52,12 +52,12 @@ from llama_index.core.readers import SimpleDirectoryReader
 from llama_index.core.storage import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from qdrant_client.models import Distance, VectorParams
-from services.ragllm import get_embedding_model
+from services.ragllm import get_embedding_model_and_dims
 from data_types import RagIndexConfiguration
 import mimetypes
 
 
-Settings.embed_model, EMBED_DIMS = get_embedding_model()
+Settings.embed_model, EMBED_DIMS = get_embedding_model_and_dims()
 
 # get resources directory
 file_path = Path(os.path.realpath(__file__))

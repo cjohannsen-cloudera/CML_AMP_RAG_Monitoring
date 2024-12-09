@@ -15,7 +15,7 @@ from llama_index.vector_stores.qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
 
-from services.ragllm import get_embedding_model
+from services.ragllm import get_embedding_model_and_dims
 
 # Add the st_app directory to the sys.path
 file_path = Path(os.path.realpath(__file__))
@@ -37,7 +37,7 @@ SAMPLE_DATA_DIR = os.path.join(main_dir, "sample_data")
 # Create the source files directory
 os.makedirs(SOURCE_FILES_DIR, exist_ok=True)
 
-Settings.embed_model, EMBED_DIMS = get_embedding_model()
+Settings.embed_model, EMBED_DIMS = get_embedding_model_and_dims()
 
 
 # Function to get the table name from a data source ID

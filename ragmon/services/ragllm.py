@@ -46,11 +46,11 @@ from .llama_utils import messages_to_prompt, completion_to_prompt
 from .CaiiEmbeddingModel import CaiiEmbeddingModel
 from .caii import describe_endpoint, get_llm
 
-domain: str = os.environ.get("CAII_DOMAIN", "")
+caii_domain: str = os.environ.get("CAII_DOMAIN", "")
 
 
 def is_caii_enabled() -> bool:
-    return len(domain) > 0
+    return len(caii_domain) > 0
 
 
 def get_inference_model_name() -> str:
@@ -72,12 +72,12 @@ def get_embedding_model_name() -> str:
 
 def get_caii_embedding_model() -> BaseEmbedding:
     endpoint = describe_endpoint(
-        domain=domain, endpoint_name=get_embedding_model_name()
+        domain=caii_domain, endpoint_name=get_embedding_model_name()
     )
     return CaiiEmbeddingModel(endpoint=endpoint)
 
 
-def get_embedding_model() -> (BaseEmbedding, int):
+def get_embedding_model_and_dims() -> (BaseEmbedding, int):
     if is_caii_enabled():
         return get_caii_embedding_model(), 4096
     else:
@@ -87,7 +87,7 @@ def get_embedding_model() -> (BaseEmbedding, int):
 def get_inference_model() -> LLM:
     if is_caii_enabled():
         return get_llm(
-            domain=domain,
+            domain=caii_domain,
             endpoint_name=get_inference_model_name(),
             messages_to_prompt=messages_to_prompt,
             completion_to_prompt=completion_to_prompt,
